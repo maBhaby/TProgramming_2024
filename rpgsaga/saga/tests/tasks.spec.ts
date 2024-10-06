@@ -12,7 +12,7 @@ describe('Testing...', () => {
         })
     });
     describe('taskA', () => {
-        test('normal input', () => {
+        test('normal input.', () => {
             expect(taskA(1.5, 3.5, 0.4)).toStrictEqual([
                 -12.050514435454069,
                 -3421.1377910716424,
