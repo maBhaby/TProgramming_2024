@@ -7,5 +7,3 @@ export function taskA(xStart: number, xEnd: number, xStep: number): number[] {
     }
     return answerA;
 }
-
-console.log(taskA(Infinity, Infinity,Infinity))

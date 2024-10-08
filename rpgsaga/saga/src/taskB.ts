@@ -7,5 +7,3 @@ export function taskB(slice_of_x_values: number[]): number[] {
     }
     return answer_b;
 }
-
-console.log(taskB([-1,-2,-3,-3]))

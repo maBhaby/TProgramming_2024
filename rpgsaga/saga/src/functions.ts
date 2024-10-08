@@ -7,5 +7,3 @@ export function funcRes(x: number): number {
     let ans: number = (4.1*(x ** (1/3)) - 2.7*logBase5(x))/(Math.log(x-1))**3;
     return ans;
   }
-
-  console.log(funcRes(-5))
