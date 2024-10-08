@@ -8,4 +8,4 @@ export function funcRes(x: number): number {
     return ans;
   }
 
-  console.log(funcRes(0))
+  console.log(funcRes(-5))
