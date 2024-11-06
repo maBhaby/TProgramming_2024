@@ -1,9 +1,9 @@
-import { funcRes } from "./functions"
+import { funcRes } from './functions';
 
-export function taskB(slice_of_x_values: number[]): number[] {
-    let answer_b: number[] = [];
-    for (let element of slice_of_x_values) {
-        answer_b.push(funcRes(element));
-    }
-    return answer_b;
+export function taskB(sliceOfXValues: number[]): number[] {
+  const answerB: number[] = [];
+  for (const element of sliceOfXValues) {
+    answerB.push(funcRes(element));
+  }
+  return answerB;
 }

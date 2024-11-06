@@ -1,9 +1,9 @@
-import { funcRes } from "./functions"
+import { funcRes } from './functions';
 
 export function taskA(xStart: number, xEnd: number, xStep: number): number[] {
-    let answerA: number[] = [];
-    for (let i = xStart; i < xEnd; i += xStep) {
-        answerA.push(funcRes(i));
-    }
-    return answerA;
+  const answerA: number[] = [];
+  for (let i = xStart; i < xEnd; i += xStep) {
+    answerA.push(funcRes(i));
+  }
+  return answerA;
 }
