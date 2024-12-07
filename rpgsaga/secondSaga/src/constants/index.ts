@@ -8,3 +8,9 @@ export const DEFAULT_PLAYERS_NAME = [
     'Any',
     'Jeka',
 ]
+
+export enum GAME_STATE {
+    INIT,
+    RUNNING,
+    FINISHED,
+}

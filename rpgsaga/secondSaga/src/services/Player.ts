@@ -1,5 +1,7 @@
 import { DEFAULT_PLAYERS_NAME } from "../constants"
 import { getUniqId, randomInt } from "../lib"
+import { Ability } from "./Ability"
+import { logger } from "./Logger"
 
 interface PlayerParams {
     name: string
@@ -12,6 +14,7 @@ export abstract class Player {
     private _health: number
     private _power: number
     private _id: string
+    protected abilities: Ability[]
 
     get id() {
         return this._id
@@ -48,6 +51,10 @@ export abstract class Player {
         this._id = getUniqId()
     }
 
+    protected setAbilities(abilities: Ability[]): void {
+        this.abilities = abilities
+    }
+
     private _generateStats() {
         return {
             name: DEFAULT_PLAYERS_NAME[randomInt(0, DEFAULT_PLAYERS_NAME.length)],
@@ -56,7 +63,15 @@ export abstract class Player {
         }
     }
 
-    abstract attack(opponent: Player): void;
+    private _attack(opponent: Player) {
+        logger.log(`Игрок ${this.name} атакует игрока ${opponent.name}`)
+        const newHealth = opponent.health - this.power
+        opponent.health = newHealth
+    }
+
+    public attack(opponent: Player): void {
+        this._attack(opponent)
+    }
 
     abstract useAbility(opponent: Player): void;
 }

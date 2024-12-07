@@ -1,10 +1,7 @@
 import { Player } from "./Player";
+import { logger } from "./Logger";
 
 export class Archer extends Player {
-    attack(opponent: Player): void {
-        
-    }
-
     useAbility(opponent: Player): void {
         
     }

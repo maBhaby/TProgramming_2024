@@ -6,15 +6,17 @@ import {
     randomInt,
     shuffleArray
 } from "../lib"
+import { GAME_STATE } from "../constants"
+import { IPlayerFactory } from "../interfaces"
 
 export class Game {
     private _players: Player[]
-    private _gameIsOn: boolean
-    private _playerFactory: PlayerFactory
+    private _gameState: GAME_STATE
+    private _playerFactory: IPlayerFactory
     private _battlePairs: [Player, Player][]
 
     constructor(players: number = 2) {
-        this._gameIsOn = false
+        this._gameState = GAME_STATE.INIT
         this._playerFactory = new PlayerFactory()
         this._players = []
         this._battlePairs = []
@@ -23,7 +25,7 @@ export class Game {
     }
 
     private _createPlayers (players: number) {
-        if (isEven(players)) {
+        if (!isEven(players)) {
             throw new Error('Game: U have to choose only an even number of players')
         }
 
@@ -44,14 +46,14 @@ export class Game {
 
     public start() {
         this._createPairs()
-        this._gameIsOn = true
+        this._gameState = GAME_STATE.RUNNING
 
         for (let [firstPlayer, secondPlayer] of this._battlePairs) {
-            this._battle(firstPlayer, secondPlayer)
+            this._fight(firstPlayer, secondPlayer)
         }
     }
 
-    private _battle(firstPlayer: Player, secondPlayer: Player) {
+    private _fight(firstPlayer: Player, secondPlayer: Player) {
         logger.log(`Сражение ${firstPlayer.name} c ${secondPlayer.name}`)
 
         let turn = randomInt(0, 1)
