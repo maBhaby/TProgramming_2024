@@ -3,10 +3,6 @@ import { Player } from './player';
 export class Knight extends Player {
   private revengeFlag: boolean = false;
 
-  constructor(name: string, health: number, power: number) {
-    super(name, health, power);
-  }
-
   attack(opponent: Player): void {
     const damage = this.power;
     if (this.revengeFlag) {
