@@ -1,39 +1,32 @@
-import { Player, logger } from "../services"
+import { Player, logger, BaseFightManager, BasePlayersManager } from "../services"
 import {
     isEven,
     PlayerFactory,
-    PlayerTypeArray,
     randomInt,
     shuffleArray
 } from "../lib"
 import { GAME_STATE } from "../constants"
-import { IPlayerFactory } from "../interfaces"
+import { FightManagerBehavior, PlayersManagerBehavior } from "../interfaces"
 
 export class Game {
     private _players: Player[]
     private _gameState: GAME_STATE
-    private _playerFactory: IPlayerFactory
     private _battlePairs: [Player, Player][]
+    private _playerBehavior: PlayersManagerBehavior
+    private _fightBehavior: FightManagerBehavior
 
     constructor(players: number = 2) {
         this._gameState = GAME_STATE.INIT
-        this._playerFactory = new PlayerFactory()
         this._players = []
         this._battlePairs = []
+        this._playerBehavior = new BasePlayersManager(PlayerFactory)
+        this._fightBehavior = new BaseFightManager(this)
 
         this._createPlayers(players)
     }
 
     private _createPlayers (players: number) {
-        if (!isEven(players)) {
-            throw new Error('Game: U have to choose only an even number of players')
-        }
-
-        for (let i = 0; i < players; i++) {
-            const player = this._playerFactory
-                .createPlayer(PlayerTypeArray[randomInt(0, PlayerTypeArray.length)])
-            this._players.push(player)
-        }
+        this._players = this._playerBehavior.createPlayers(players)
     }
 
     private _createPairs() {

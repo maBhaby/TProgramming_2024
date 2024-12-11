@@ -1,7 +1,7 @@
-import { DEFAULT_PLAYERS_NAME } from "../constants"
-import { getUniqId, randomInt } from "../lib"
-import { Ability } from "./Ability"
-import { logger } from "./Logger"
+import { DEFAULT_PLAYERS_NAME } from "../../constants"
+import { getUniqId, randomInt } from "../../lib"
+import { Ability } from "../Ability"
+import { logger } from "../Logger"
 
 interface PlayerParams {
     name: string
