@@ -7,18 +7,26 @@ import {
 } from "../lib"
 import { GAME_STATE } from "../constants"
 import { FightManagerBehavior, PlayersManagerBehavior } from "../interfaces"
+import { Observable, Observer } from "../interfaces/Observable"
 
-export class Game {
+export class Game implements Observable {
+    private _listners: Observer[]
+
     private _players: Player[]
+
     private _gameState: GAME_STATE
+
     private _battlePairs: [Player, Player][]
+
     private _playerBehavior: PlayersManagerBehavior
+
     private _fightBehavior: FightManagerBehavior
 
     constructor(players: number = 2) {
         this._gameState = GAME_STATE.INIT
         this._players = []
         this._battlePairs = []
+        this._listners = []
         this._playerBehavior = new BasePlayersManager(PlayerFactory)
         this._fightBehavior = new BaseFightManager(this)
 
@@ -54,5 +62,17 @@ export class Game {
             const attacker = isEven(turn) ? firstPlayer : secondPlayer
             const defender = isEven(turn) ? firstPlayer : secondPlayer
         }
+    }
+
+    public add(obs: Observer): void {
+        this._listners.push(obs)
+    }
+
+    public remove(): void {
+        
+    }
+
+    public notify(): void {
+        
     }
 }
