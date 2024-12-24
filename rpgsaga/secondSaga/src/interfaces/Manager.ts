@@ -1,7 +1,7 @@
 import { Player } from "../services"
 
 export interface FightManagerBehavior {
-  fight() : void
+  fight(firstPlayer: Player, secondPlayer: Player) : void
 }
 
 export interface PlayersManagerBehavior {
