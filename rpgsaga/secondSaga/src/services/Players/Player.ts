@@ -1,4 +1,5 @@
 import { DEFAULT_PLAYERS_NAME } from "../../constants"
+import { SideEffectBehavior } from "../../interfaces"
 import { getUniqId, randomInt } from "../../lib"
 import { Ability } from "../Ability"
 import { logger } from "../Logger"
@@ -10,11 +11,13 @@ interface PlayerParams {
 }
 
 export abstract class Player {
+    private _role: string
     private _name: string
     private _health: number
     private _power: number
     private _id: string
     protected abilities: Ability[]
+    protected sideEffects?: SideEffectBehavior[]
 
     get id() {
         return this._id
@@ -43,16 +46,35 @@ export abstract class Player {
         return this._power
     }
 
+    get role() {
+        return this._role
+    }
+
+    set role(arg: string) {
+        this._role = arg
+    }
+
+    get fullName() {
+        return `(${this.role}) ${this.name}`
+    }
+
     constructor (params?: PlayerParams) {
         const { name, health, power } = params ?? this._generateStats()
         this._name = name;
         this._health = health;
         this._power = power;
         this._id = getUniqId()
+
+        this.sideEffects = []
     }
 
     protected setAbilities(abilities: Ability[]): void {
         this.abilities = abilities
+    }
+
+    protected setSideEffects(sideEffects: SideEffectBehavior | SideEffectBehavior[]) {
+        const _sideEffects = Array.isArray(sideEffects) ? sideEffects : [sideEffects]
+        this.sideEffects.push(..._sideEffects)
     }
 
     private _generateStats() {
@@ -63,15 +85,13 @@ export abstract class Player {
         }
     }
 
-    private _attack(opponent: Player) {
-        logger.log(`Игрок ${this.name} атакует игрока ${opponent.name}`)
+    public _baseAttack(opponent: Player) {
+        logger.log(`Игрок ${this.fullName} атакует игрока ${opponent.name}`)
         const newHealth = opponent.health - this.power
         opponent.health = newHealth
     }
 
-    public attack(opponent: Player): void {
-        this._attack(opponent)
-    }
+    abstract attack(opponent: Player): void
 
     abstract useAbility(opponent: Player): void;
 }

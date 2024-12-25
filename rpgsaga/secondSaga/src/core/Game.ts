@@ -49,10 +49,6 @@ export class Game {
     private _fight(firstPlayer: Player, secondPlayer: Player) {
         logger.log(`Сражение ${firstPlayer.name} c ${secondPlayer.name}`)
 
-        let turn = randomInt(0, 1)
-        while(firstPlayer.health > 0 && secondPlayer.health > 0) {
-            const attacker = isEven(turn) ? firstPlayer : secondPlayer
-            const defender = isEven(turn) ? firstPlayer : secondPlayer
-        }
+        
     }
 }

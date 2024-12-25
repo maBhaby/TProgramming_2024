@@ -4,7 +4,7 @@ import { Observable } from "../../interfaces/Observable";
 import { randomInt } from "../../lib";
 import { Player } from "../Players";
 
-export class BaseFightManager implements FightManagerBehavior, Observable {
+export class BaseFightManager implements FightManagerBehavior {
   private readonly _game: Game
 
   constructor(game: Game) {
@@ -12,28 +12,21 @@ export class BaseFightManager implements FightManagerBehavior, Observable {
   }
 
   public fight(firstPlayer: Player, secondPlayer: Player): void {
-    const [attacker, defender] = this.createBattleRole(firstPlayer, secondPlayer)
+    const getFighters = this.createBattleRole(firstPlayer, secondPlayer)
 
-    while (attacker.health > 0 && defender.health > 0) {
-      attacker.attack
+    while (firstPlayer.health > 0 && secondPlayer.health > 0) {
+      const [attacker, defender] = getFighters()
+      attacker.attack(defender)
     }
   }
 
   private createBattleRole(firstPlayer: Player, secondPlayer: Player) {
-    if (randomInt(0, 1) === 1) {
-      return [firstPlayer, secondPlayer]
-    } return [secondPlayer, firstPlayer]
-  }
+    let turn = randomInt(0, 1)
+    return () => {
+      const role = turn === 1 ? [firstPlayer, secondPlayer] : [secondPlayer, firstPlayer]
+      turn = turn === 1 ? 0 : 1
 
-  add(): void {
-      
-  }
-
-  remove(): void {
-      
-  }
-
-  notify(): void {
-      
+      return role
+    }
   }
 }
