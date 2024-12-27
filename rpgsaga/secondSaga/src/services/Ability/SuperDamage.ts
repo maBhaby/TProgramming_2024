@@ -8,6 +8,7 @@ export class SuperDamage extends Ability {
       logger.log(`Игрок ${this.player.fullName} использует супер удар по игроку ${opponent.fullName}`)
       opponent.health -= this.player.power * 1.3
     } else {
+      // нельзя сюда
       this.player._baseAttack(opponent)
     }
   }
